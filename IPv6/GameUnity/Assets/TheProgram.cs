@@ -26,16 +26,16 @@ public class TheProgram : MonoBehaviour
 	// Use this for initialization
 	private void Start()
 	{
-		const string hostipV4 = "169.55.244.52";
-		const string hostipV6 = "2002:a937:f434::a937:f434";
-
+		const string hostipV4 = "127.0.0.1";
+		const string hostipV6 = "::1";
+/*
 #if UNITY_ANDROID
 		hostip = hostipV4;
 #endif
 #if UNITY_IPHONE
-			hostip = hostipV6;
+		hostip = hostipV6;
 #endif
-
+*/
 		//try
 		//{
 		IPProtocol ipProtocol = hostipV6 == hostip ? IPProtocol.IPv6 : IPProtocol.IPv4;
