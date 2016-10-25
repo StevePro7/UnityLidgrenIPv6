@@ -34,7 +34,7 @@ namespace Lidgren.Network
 		internal Dictionary<IPEndPoint, NetConnection> m_handshakes;
 
 		internal readonly NetPeerStatistics m_statistics;
-		internal long m_uniqueIdentifier;
+		internal long m_uniqueIdentifier = 0;
 		internal bool m_executeFlushSendQueue;
 
 		private AutoResetEvent m_messageReceivedEvent;

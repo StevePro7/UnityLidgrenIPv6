@@ -12,7 +12,7 @@ namespace Lidgren.Network
 	{
 		private static int s_initializedPeersCount;
 
-		private int m_listenPort;
+		private int m_listenPort = 0;
 		private object m_tag;
 		private object m_messageReceivedEventCreationLock = new object();
 
