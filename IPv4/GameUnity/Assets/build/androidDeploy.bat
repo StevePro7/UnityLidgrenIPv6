@@ -46,22 +46,6 @@ echo Installing APK...
 %adb% install -r %apkname%.apk
 
 
-REM Special case versions for the obb expansion pack
-if %androidversion%==4.2.2 (
-	echo 4.2.2 detected...
-	%adb% shell mkdir mnt/shell/emulated/obb/%apkname%
-	echo Complete!
-	goto end
-)
-
-if %androidversion%==4.3 (
-	echo 4.3 detected...
-	%adb% shell mkdir mnt/shell/emulated/obb/%apkname%
-	echo Complete!
-	goto end
-)
-
-
 
 :end
 echo "Press Any Key To Exit..."
