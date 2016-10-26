@@ -26,20 +26,20 @@ for /f %%i in ('%adb% shell getprop ro.build.version.release') do set androidver
 echo Android version is %androidversion%
 
 REM check for installation
-for /f %%i in ('%adb% shell pm list packages com.onethumbmobile.%apkname%') do set installed=%%i
+for /f %%i in ('%adb% shell pm list packages %apkname%') do set installed=%%i
 echo installed...%installed%
 
 if (%installed%) == () goto skipcacheclear
 
 REM clear cache
 REM echo clearing cache...
-REM %adb% shell pm clear com.onethumbmobile.%apkname%
+REM %adb% shell pm clear %apkname%
 
 :skipcacheclear
 
 REM Uninstalling old version
 REM echo Uninstalling old version if present...
-REM %adb% uninstall com.onethumbmobile.%apkname%
+REM %adb% uninstall %apkname%
 
 REM Whatever the version, the apk install is the same.
 echo Installing APK...
@@ -49,27 +49,18 @@ echo Installing APK...
 REM Special case versions for the obb expansion pack
 if %androidversion%==4.2.2 (
 	echo 4.2.2 detected...
-	%adb% shell mkdir mnt/shell/emulated/obb/com.onethumbmobile.%apkname%
-	echo Pushing OBB...
-	%adb% push %apkname%.main.obb mnt/shell/emulated/obb/com.onethumbmobile.%apkname%/main.%versioncode%.com.onethumbmobile.%apkname%.obb
-    echo Complete!
+	%adb% shell mkdir mnt/shell/emulated/obb/%apkname%
+	echo Complete!
 	goto end
 )
 
 if %androidversion%==4.3 (
 	echo 4.3 detected...
-	%adb% shell mkdir mnt/shell/emulated/obb/com.onethumbmobile.%apkname%
-	echo Pushing OBB...
-	%adb% push %apkname%.main.obb mnt/shell/emulated/obb/com.onethumbmobile.%apkname%/main.%versioncode%.com.onethumbmobile.%apkname%.obb
-    echo Complete!
+	%adb% shell mkdir mnt/shell/emulated/obb/%apkname%
+	echo Complete!
 	goto end
 )
 
-
-REM Pre-4.2.2 versions obb deployment
-echo Pushing OBB...
-%adb% push %apkname%.main.obb /mnt/sdcard/Android/obb/com.onethumbmobile.%apkname%/main.%versioncode%.com.onethumbmobile.%apkname%.obb
-echo Complete!
 
 
 :end
