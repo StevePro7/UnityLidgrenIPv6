@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LogManager.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="TheProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Lidgren\Encryption\NetAESEncryption.cs" />
     <Compile Include="Lidgren\Encryption\NetBlockEncryptionBase.cs" />
