@@ -5,8 +5,6 @@ using System.Linq;
 using System.Text;
 using Lidgren.Network;
 
-
-
 // Lidgren Network example
 // Made by: Riku Koskinen
 // http://xnacoding.blogspot.com/
@@ -20,10 +18,6 @@ using Lidgren.Network;
 
 // THIS IS VERY VERY VERY BASIC EXAMPLE OF NETWORKING IN GAMES
 // NO PREDICTION, NO LAG COMPENSATION OF ANYKIND
-
-
-
-
 
 namespace GameServer
 {
@@ -317,11 +311,11 @@ namespace GameServer
 	// This way we can just send byte over net and no need to send anything bigger
 	enum MoveDirection
 	{
+		NONE,
 		UP,
 		DOWN,
 		LEFT,
 		RIGHT,
-		NONE
 	}
 }
 #endif
