@@ -281,11 +281,11 @@ namespace GameClient
 		// Move direction enumerator
 		enum MoveDirection
 		{
+			NONE,
 			UP,
 			DOWN,
 			LEFT,
 			RIGHT,
-			NONE
 		}
 
 

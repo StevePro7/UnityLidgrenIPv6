@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Net;
+using System.Net.Sockets;
 using Lidgren.Network;
 
 // Lidgren Network example
@@ -45,11 +47,25 @@ namespace GameClient
 			Console.WriteLine("Enter IP To Connect - {0}:{1}", hostip, port);
 			Console.Read();
 
+			String ipProtocolText = ConfigurationManager.AppSettings["protocol"];
+			IPProtocol ipProtocol;
+			Enum.TryParse(ipProtocolText, true, out ipProtocol);
+
+			NetGameConfiguration netGameConfiguration;
+			if (IPProtocol.IPv4 != ipProtocol)
+			{
+				netGameConfiguration = new NetGameConfiguration(IPAddress.IPv6Any, AddressFamily.InterNetworkV6);
+			}
+			else
+			{
+				netGameConfiguration = new NetGameConfiguration(IPAddress.Any, AddressFamily.InterNetwork);
+			}
+
 			// Create new instance of configs. Parameter is "application Id". It has to be same on client and server.
-			NetPeerConfiguration Config = new NetPeerConfiguration("game");
+			NetPeerConfiguration Config = new NetPeerConfiguration("game", netGameConfiguration);
 
 			// Create new client, with previously created configs
-			Client = new NetClient(Config);
+			Client = new NetClient(Config, netGameConfiguration);
 
 			// Create new outgoing message
 			NetOutgoingMessage outmsg = Client.CreateMessage();
