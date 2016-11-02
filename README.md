@@ -6,6 +6,7 @@ Tuesday, 15th November 2016
 
 ###### INTRO
 At WWDC 2015, Apple announced the transition to IPv6-only network services in iOS 9.
+<br />
 June 1st 2016 all apps submitted to the App Store must support IPv6-only networking!
 
 ###### PLATFORMS
@@ -24,10 +25,10 @@ http://github.com/SteveProXNA/UnityLidgrenIPv6
 
 ###### CREDITS
 Special thanks to [Lidgren](https://github.com/lidgren/lidgren-network-gen3) for initial Lidgren 3.0.
+<br />
 Thanks also goes to [jens-nolte](https://github.com/jens-nolte) for IPv6 Dual Mode.
 
 ###### BLOG
-For more infomation please check out the following blog post: http://bit.ly/1TwO2uL
 For more infomation please check out the following blog post: http://bit.ly/ABCDEFG
 
 ###### CONTACT
