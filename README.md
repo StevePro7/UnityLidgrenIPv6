@@ -24,7 +24,7 @@ June 1st 2016 all apps submitted to the App Store must support IPv6-only network
 http://github.com/SteveProXNA/UnityLidgrenIPv6
 
 ###### CREDITS
-Special thanks to [Lidgren](https://github.com/lidgren/lidgren-network-gen3) for initial Lidgren 3.0.
+Special thanks to [Lidgren](https://github.com/lidgren/lidgren-network-gen3) for initial Lidgren 3.0 code.
 <br />
 Thanks also goes to [jens-nolte](https://github.com/jens-nolte) for IPv6 Dual Mode.
 
