@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using Lidgren.Network;
@@ -23,6 +24,73 @@ namespace GameClient
 {
 	public class TheProgram : MonoBehaviour
 	{
+		// ResourceManager
+//		private void Start()
+//		{
+//			string destPlatform = String.Empty;
+//#if UNITY_ANDROID
+//			destPlatform = "Android";
+//#endif
+//#if UNITY_IPHONE
+//		destPlatform = "iOS";
+//#endif
+//			String hostip = "127.0.0.1";
+//			Int32 port = 14242;
+//			string fileNameWithPath = String.Format("{0}/{1}.txt", "TextFiles", destPlatform);
+
+//			IResourceManager resourceManager = new ResourceManager();
+//			TextAsset asset = (TextAsset)resourceManager.LoadResourceImmediate(typeof(TextAsset), fileNameWithPath);
+//			string info = asset.text;
+//			using (StringReader file = new StringReader(asset.text))
+//			{
+//				while (true)
+//				{
+//					string lineStr = file.ReadLine();
+//					if (lineStr == null)
+//						break;
+
+//					string[] array = lineStr.Split(new[] { ',' });
+//					string key = array[0];
+//					string value = array[1];
+
+//					switch (key.ToUpper())
+//					{
+//						case "HOST":
+//							hostip = value;
+//							break;
+//						case "PORT":
+//							port = Int32.Parse(value);
+//							break;
+//					}
+//				}
+//			}
+//		}
+
+		// ConfigurationManager
+		//private void Start()
+		//{
+		//	string fileRoot = Application.streamingAssetsPath;
+		//	string envPath = fileRoot + "/Environment.txt";
+		//	IConfigManager configManager = new ConfigManager();
+
+		//	IPProtocol ipProtocol = IPProtocol.IPv4;
+		//	Debug.Log(ipProtocol);
+
+		//	string environment = configManager.GetInformationFromFile(envPath, ipProtocol.ToString());
+		//	try
+		//	{
+		//		ipProtocol = (IPProtocol)Enum.Parse(typeof(IPProtocol), environment, true);
+		//	}
+		//	catch
+		//	{
+		//		// Must do this was as Enum.TryParse not available in .NET 2.0.
+		//	}
+		//	Debug.Log(ipProtocol);
+		//}
+	}
+	/*
+	public class TheProgram : MonoBehaviour
+	{
 		// Client Object
 		static NetClient Client;
 
@@ -44,14 +112,14 @@ namespace GameClient
 		{
 			const string hostipV4 = "127.0.0.1";
 			const string hostipV6 = "::1";
-/*
-#if UNITY_ANDROID
-		hostip = hostipV4;
-#endif
-#if UNITY_IPHONE
-		hostip = hostipV6;
-#endif
-*/
+
+//#if UNITY_ANDROID
+//		hostip = hostipV4;
+//#endif
+//#if UNITY_IPHONE
+//		hostip = hostipV6;
+//#endif
+
 			//try
 			//{
 			IPProtocol ipProtocol = hostipV6 == hostip ? IPProtocol.IPv6 : IPProtocol.IPv4;
@@ -337,4 +405,5 @@ namespace GameClient
 		MOVE,
 		WORLDSTATE
 	}
+	*/
 }
