@@ -30,18 +30,33 @@ namespace GameClient
 		// Indicates if program is running
 		static bool IsRunning = true;
 
+		static string hostip;
+		static int port;
+
 		public static string ResultText = "GAME";
 		public static string ErrorText = String.Empty;
-
 		static MoveDirection MoveDir;
-		static string hostip = "127.0.0.1";
-		static int port = 14242;
 
 		// Use this for initialization
 		private void Start()
 		{
 			//try
 			//{
+			string destPlatform = String.Empty;
+#if UNITY_ANDROID
+			destPlatform = "Android";
+#endif
+#if UNITY_IPHONE
+			destPlatform = "iOS";
+#endif
+			string fileNameWithPath = String.Format("TextFiles/{0}.txt", destPlatform);
+
+			IResourceManager resourceManager = new ResourceManager();
+			TextAsset asset = (TextAsset)resourceManager.LoadResourceImmediate(typeof(TextAsset), fileNameWithPath);
+			String text = asset.text;
+			hostip = resourceManager.GetInformationFromFile(text, "HOST");
+			port = Convert.ToInt32(resourceManager.GetInformationFromFile(text, "PORT"));
+
 			// Create new instance of configs. Parameter is "application Id". It has to be same on client and server.
 			NetPeerConfiguration Config = new NetPeerConfiguration("game");
 
@@ -64,7 +79,7 @@ namespace GameClient
 			outmsg.Write("MyName");
 
 			// Connect client, to ip previously requested from user 
-			Client.Connect(hostip, 14242, outmsg);
+			Client.Connect(hostip, port, outmsg);
 
 
 			ResultText = "Client Started";
