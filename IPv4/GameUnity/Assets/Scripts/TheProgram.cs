@@ -207,7 +207,7 @@ namespace GameClient
 				{
 					if (inc.ReadByte() == (byte)PacketTypes.WORLDSTATE)
 					{
-						Console.WriteLine("World State uppaus");
+						//Console.WriteLine("World State uppaus");
 						GameStateList.Clear();
 						int jii = 0;
 						jii = inc.ReadInt32();
