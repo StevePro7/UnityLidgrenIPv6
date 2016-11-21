@@ -272,9 +272,7 @@ class PerformBuild
 			File.WriteAllText(fullPath, streaminAssetsEnabled);
 		}
 
-		PlayerSettings.productName = productName;
 		PlayerSettings.bundleIdentifier = bundleId;
-
 		string bundleVersion = (0 == version.Length) ? "1.0" : version;
 		PlayerSettings.bundleVersion = bundleVersion;
 		//SetIcon(target, environment);
@@ -284,7 +282,6 @@ class PerformBuild
 		Debug.Log(enviromentText);
 		Debug.Log(svnRevisionText);
 		Debug.Log("Streaming Assets Enabled: " + streaminAssetsEnabled);
-		Debug.Log("PlayerSettings Product=\"" + productName + "\"");
 		Debug.Log("PlayerSettings Version=\"" + bundleVersion + "\"");
 		Debug.Log("PlayerSettings BundleID=\"" + bundleId + "\"");
 
