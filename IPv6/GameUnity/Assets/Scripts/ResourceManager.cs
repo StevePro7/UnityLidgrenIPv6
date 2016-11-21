@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections;
+using System.IO;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 public interface IResourceManager
 {
 	Object LoadResourceImmediate(Type resourceType, string fileNameWithPath);
+	String GetInformationFromFile(String text, String key);
 }
 
 public class ResourceManager : IResourceManager
@@ -30,5 +31,29 @@ public class ResourceManager : IResourceManager
 
 		string load = String.Format("{0}/{1}", path, filename);
 		return Resources.Load(load, resourceType);
+	}
+
+	public String GetInformationFromFile(String text, String data)
+	{
+		using (StringReader file = new StringReader(text))
+		{
+			while (true)
+			{
+				string lineStr = file.ReadLine();
+				if (lineStr == null)
+					break;
+
+				string[] array = lineStr.Split(new[] { ',' });
+				string key = array[0];
+				string value = array[1];
+
+				if (key == data)
+				{
+					return value;
+				}
+			}
+		}
+
+		return String.Empty;
 	}
 }

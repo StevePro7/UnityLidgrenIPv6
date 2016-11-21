@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using Lidgren.Network;
@@ -24,73 +23,6 @@ namespace GameClient
 {
 	public class TheProgram : MonoBehaviour
 	{
-		// ResourceManager
-//		private void Start()
-//		{
-//			string destPlatform = String.Empty;
-//#if UNITY_ANDROID
-//			destPlatform = "Android";
-//#endif
-//#if UNITY_IPHONE
-//		destPlatform = "iOS";
-//#endif
-//			String hostip = "127.0.0.1";
-//			Int32 port = 14242;
-//			string fileNameWithPath = String.Format("{0}/{1}.txt", "TextFiles", destPlatform);
-
-//			IResourceManager resourceManager = new ResourceManager();
-//			TextAsset asset = (TextAsset)resourceManager.LoadResourceImmediate(typeof(TextAsset), fileNameWithPath);
-//			string info = asset.text;
-//			using (StringReader file = new StringReader(asset.text))
-//			{
-//				while (true)
-//				{
-//					string lineStr = file.ReadLine();
-//					if (lineStr == null)
-//						break;
-
-//					string[] array = lineStr.Split(new[] { ',' });
-//					string key = array[0];
-//					string value = array[1];
-
-//					switch (key.ToUpper())
-//					{
-//						case "HOST":
-//							hostip = value;
-//							break;
-//						case "PORT":
-//							port = Int32.Parse(value);
-//							break;
-//					}
-//				}
-//			}
-//		}
-
-		// ConfigurationManager
-		//private void Start()
-		//{
-		//	string fileRoot = Application.streamingAssetsPath;
-		//	string envPath = fileRoot + "/Environment.txt";
-		//	IConfigManager configManager = new ConfigManager();
-
-		//	IPProtocol ipProtocol = IPProtocol.IPv4;
-		//	Debug.Log(ipProtocol);
-
-		//	string environment = configManager.GetInformationFromFile(envPath, ipProtocol.ToString());
-		//	try
-		//	{
-		//		ipProtocol = (IPProtocol)Enum.Parse(typeof(IPProtocol), environment, true);
-		//	}
-		//	catch
-		//	{
-		//		// Must do this was as Enum.TryParse not available in .NET 2.0.
-		//	}
-		//	Debug.Log(ipProtocol);
-		//}
-	}
-	/*
-	public class TheProgram : MonoBehaviour
-	{
 		// Client Object
 		static NetClient Client;
 
@@ -100,39 +32,48 @@ namespace GameClient
 		// Indicates if program is running
 		static bool IsRunning = true;
 
+		static string hostip;
+		static int port;
+
 		public static string ResultText = "GAME";
 		public static string ErrorText = String.Empty;
-
 		static MoveDirection MoveDir;
-		static string hostip = "127.0.0.1";
-		static int port = 14242;
 
 		// Use this for initialization
 		private void Start()
 		{
-			const string hostipV4 = "127.0.0.1";
-			const string hostipV6 = "::1";
-
-//#if UNITY_ANDROID
-//		hostip = hostipV4;
-//#endif
-//#if UNITY_IPHONE
-//		hostip = hostipV6;
-//#endif
-
 			//try
 			//{
-			IPProtocol ipProtocol = hostipV6 == hostip ? IPProtocol.IPv6 : IPProtocol.IPv4;
+			string destPlatform = String.Empty;
+#if UNITY_ANDROID
+			destPlatform = "Android";
+#endif
+#if UNITY_IPHONE
+			destPlatform = "iOS";
+#endif
+			string fileNameWithPath = String.Format("TextFiles/{0}.txt", destPlatform);
 
-			NetGameConfiguration netGameConfiguration;
-			if (IPProtocol.IPv4 != ipProtocol)
-			{
-				netGameConfiguration = new NetGameConfiguration(IPAddress.IPv6Any, AddressFamily.InterNetworkV6);
-			}
-			else
-			{
-				netGameConfiguration = new NetGameConfiguration(IPAddress.Any, AddressFamily.InterNetwork);
-			}
+			IResourceManager resourceManager = new ResourceManager();
+			TextAsset asset = (TextAsset)resourceManager.LoadResourceImmediate(typeof(TextAsset), fileNameWithPath);
+			String text = asset.text;
+			string host = resourceManager.GetInformationFromFile(text, "HOST");
+			port = Convert.ToInt32(resourceManager.GetInformationFromFile(text, "PORT"));
+
+			ILogManager logManager = new LogManager();
+			logManager.Initialize(TargetEnvironment.Test);
+
+			IIPNetworkFactory ipNetworkFactory = new IPNetworkFactory();
+			IPNetworkManager ipNetworkManager = new IPNetworkManager(ipNetworkFactory, logManager);
+
+			IPProtocol ipProtocol = ipNetworkManager.GetNetworkProtocolsFromDNS(host);
+			IPAddress netIPAddress = IPProtocol.IPv4 == ipProtocol ? IPAddress.Any : IPAddress.IPv6Any;
+			AddressFamily netAddressFamily = IPProtocol.IPv4 == ipProtocol ? AddressFamily.InterNetwork : AddressFamily.InterNetworkV6;
+			NetGameConfiguration netGameConfiguration = new NetGameConfiguration(netIPAddress, netAddressFamily);
+
+			// Convert IP address
+			IPAddress ipAddress = ipNetworkManager.GetHostAddressForType(host, ipProtocol);
+			hostip = ipAddress.ToString();
+
 
 			// Create new instance of configs. Parameter is "application Id". It has to be same on client and server.
 			NetPeerConfiguration Config = new NetPeerConfiguration("game", netGameConfiguration);
@@ -156,7 +97,7 @@ namespace GameClient
 			outmsg.Write("MyName");
 
 			// Connect client, to ip previously requested from user 
-			Client.Connect(hostip, 14242, outmsg);
+			Client.Connect(hostip, port, outmsg);
 
 
 			ResultText = "Client Started";
@@ -382,6 +323,7 @@ namespace GameClient
 		}
 	}
 
+
 	class Character
 	{
 		public int X { get; set; }
@@ -405,5 +347,4 @@ namespace GameClient
 		MOVE,
 		WORLDSTATE
 	}
-	*/
 }
