@@ -42,24 +42,25 @@ namespace GameClient
 		{
 			// Ask for IP
 			// Read Ip to string
-			hostip = ConfigurationManager.AppSettings["host"];
+			string host = ConfigurationManager.AppSettings["host"];
 			port = Convert.ToInt32(ConfigurationManager.AppSettings["port"]);
+
+			ILogManager logManager = new LogManager();
+			logManager.Initialize(TargetEnvironment.Test);
+
+			IIPNetworkFactory ipNetworkFactory = new IPNetworkFactory();
+			IPNetworkManager ipNetworkManager = new IPNetworkManager(ipNetworkFactory, logManager);
+
+			IPProtocol ipProtocol = ipNetworkManager.GetNetworkProtocolsFromDNS(host);
+			IPAddress netIPAddress = IPProtocol.IPv4 == ipProtocol ? IPAddress.Any : IPAddress.IPv6Any;
+			AddressFamily netAddressFamily = IPProtocol.IPv4 == ipProtocol ? AddressFamily.InterNetwork : AddressFamily.InterNetworkV6;
+			NetGameConfiguration netGameConfiguration = new NetGameConfiguration(netIPAddress, netAddressFamily);
+
+			// Convert IP address
+			IPAddress ipAddress = ipNetworkManager.GetHostAddressForType(host, ipProtocol);
+			hostip = ipAddress.ToString();
 			Console.WriteLine("Enter IP To Connect - {0}:{1}", hostip, port);
 			Console.Read();
-
-			String ipProtocolText = ConfigurationManager.AppSettings["protocol"];
-			IPProtocol ipProtocol;
-			Enum.TryParse(ipProtocolText, true, out ipProtocol);
-
-			NetGameConfiguration netGameConfiguration;
-			if (IPProtocol.IPv4 != ipProtocol)
-			{
-				netGameConfiguration = new NetGameConfiguration(IPAddress.IPv6Any, AddressFamily.InterNetworkV6);
-			}
-			else
-			{
-				netGameConfiguration = new NetGameConfiguration(IPAddress.Any, AddressFamily.InterNetwork);
-			}
 
 			// Create new instance of configs. Parameter is "application Id". It has to be same on client and server.
 			NetPeerConfiguration Config = new NetPeerConfiguration("game", netGameConfiguration);
@@ -318,40 +319,6 @@ namespace GameClient
 			for (int index = 0; index < GameStateList.Count; ++index)
 			{
 				Console.WriteLine("Player[{0}] = \"{1}\"", (index + 1), GameStateList[index].X);
-			}
-		}
-		private static void DrawGameStateX()
-		{
-			Console.Clear();
-			Console.WriteLine("###############################################################################");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("#.............................................................................#");
-			Console.WriteLine("###############################################################################");
-			Console.WriteLine("Move with: WASD");
-			Console.WriteLine("Connections status: " + (NetConnectionStatus)Client.ServerConnection.Status);
-			// Draw each player to their positions
-			foreach (Character ch in GameStateList)
-			{
-				// Sets manually cursor position in console
-				Console.SetCursorPosition(ch.X, ch.Y);
-
-				// Write char that marks player
-				Console.Write("@");
 			}
 		}
 	}
