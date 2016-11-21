@@ -135,10 +135,6 @@ class PerformBuild
 
 		File.WriteAllLines(scriptPath, scriptLines);
 	}
-	private static string GetEnvironmentSpecificProductName(BuildTarget target, string environment)
-	{
-		return "GameUnity" + environment;
-	}
 	private static void SetIcon(BuildTarget target, string environment)
 	{
 		//destination where the icon we pick should end up
@@ -276,14 +272,12 @@ class PerformBuild
 			File.WriteAllText(fullPath, streaminAssetsEnabled);
 		}
 
-		string productName = GetEnvironmentSpecificProductName(target, environment);
-
 		PlayerSettings.productName = productName;
 		PlayerSettings.bundleIdentifier = bundleId;
 
 		string bundleVersion = (0 == version.Length) ? "1.0" : version;
 		PlayerSettings.bundleVersion = bundleVersion;
-		SetIcon(target, environment);
+		//SetIcon(target, environment);
 
 
 
