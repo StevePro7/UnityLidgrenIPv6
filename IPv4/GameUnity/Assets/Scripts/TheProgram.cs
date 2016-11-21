@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Lidgren.Network;
 using UnityEngine;
 
@@ -291,6 +289,7 @@ namespace GameClient
 			GUI.Label(new Rect(xPos, yPos += heightPlus, Screen.width, Screen.height - yPos), ResultText);
 		}
 	}
+
 
 	class Character
 	{
