@@ -53,12 +53,20 @@ namespace GameClient
 #endif
 			string fileNameWithPath = String.Format("TextFiles/{0}.txt", destPlatform);
 
+			// Get data from Resources.
 			IResourceManager resourceManager = new ResourceManager();
 			TextAsset asset = (TextAsset)resourceManager.LoadResourceImmediate(typeof(TextAsset), fileNameWithPath);
 			String text = asset.text;
 			string host = resourceManager.GetInformationFromFile(text, "HOST");
 			port = Convert.ToInt32(resourceManager.GetInformationFromFile(text, "PORT"));
 
+			// Get data from Streaming Assets
+			string fileRoot = Application.streamingAssetsPath;
+			string fullPath = fileRoot + "/GameServer.txt";
+			IConfigManager configManager = new ConfigManager();
+			host = configManager.GetInformationFromFile(fullPath, host);
+
+			// Invoke IP Manger for IP Protocol
 			ILogManager logManager = new LogManager();
 			logManager.Initialize(TargetEnvironment.Test);
 

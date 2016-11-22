@@ -241,7 +241,7 @@ class PerformBuild
 		if (0 != environment.Length)
 		{
 			// Persist environment in local file for client to load at runtime.
-			string fullPath = fileRoot + "/Environment.txt";
+			string fullPath = fileRoot + "/GameServer.txt";
 			File.WriteAllText(fullPath, environment);
 		}
 
