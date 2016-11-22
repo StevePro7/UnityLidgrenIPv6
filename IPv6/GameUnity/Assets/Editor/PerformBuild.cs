@@ -107,7 +107,7 @@ class PerformBuild
 	
 	private static CommandLineData GetCommandLineData(string defaultBundleId)
 	{
-		string environment = CommandLineReader.GetCustomArgument("Environment");
+		string environment = CommandLineReader.GetCustomArgument("GameServer");
 		string svnrevision = CommandLineReader.GetCustomArgument("SvnRevision");
 		string version = CommandLineReader.GetCustomArgument("Version");
 
