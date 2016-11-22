@@ -51,11 +51,18 @@ namespace GameClient
 #endif
 			string fileNameWithPath = String.Format("TextFiles/{0}.txt", destPlatform);
 
+			// Get data from Resources.
 			IResourceManager resourceManager = new ResourceManager();
 			TextAsset asset = (TextAsset)resourceManager.LoadResourceImmediate(typeof(TextAsset), fileNameWithPath);
 			String text = asset.text;
 			hostip = resourceManager.GetInformationFromFile(text, "HOST");
 			port = Convert.ToInt32(resourceManager.GetInformationFromFile(text, "PORT"));
+
+			// Get data from Streaming Assets
+			string fileRoot = Application.streamingAssetsPath;
+			string fullPath = fileRoot + "/GameServer.txt";
+			IConfigManager configManager = new ConfigManager();
+			hostip = configManager.GetInformationFromFile(fullPath, hostip);
 
 			// Create new instance of configs. Parameter is "application Id". It has to be same on client and server.
 			NetPeerConfiguration Config = new NetPeerConfiguration("game");

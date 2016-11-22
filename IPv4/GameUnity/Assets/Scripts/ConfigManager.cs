@@ -2,7 +2,12 @@
 using System.IO;
 using UnityEngine;
 
-public class ConfigManager
+public interface IConfigManager
+{
+	string GetInformationFromFile(string fullPath, string defaultValue);
+}
+
+public class ConfigManager : IConfigManager
 {
 	public string GetInformationFromFile(string fullPath, string defaultValue)
 	{
