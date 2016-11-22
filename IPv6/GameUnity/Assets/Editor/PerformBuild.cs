@@ -41,7 +41,7 @@ class PerformBuild
 
 		//ensure deployment script is up to date with correct version code and bundle info.
 		string apkName = Path.GetFileNameWithoutExtension(locationPathName);
-		WriteVersionCodeAndAPKNameToScript(commandLineData.Environment, verCode, apkName, homeDirectory);
+		//WriteVersionCodeAndAPKNameToScript(commandLineData.Environment, verCode, apkName, homeDirectory);
 
 		if (commandLineData.StreamingAssetsEnabled == "true")
 		{
@@ -230,14 +230,15 @@ class PerformBuild
 		string fileRoot = Application.streamingAssetsPath;
 
 		// Check environment settings.
+		string enviromentText = "PlayerSettings Environment=\"" + environment + "\"";
 		if (0 == environment.Length)
 		{
-			environment = "Test";
+			environment = "localhost";
+			enviromentText += " " + environment;
 		}
 
 		// Environment specific.
-		string enviromentText = "PlayerSettings Environment=\"" + environment + "\"";
-		if (0 == environment.Length)
+		if (0 != environment.Length)
 		{
 			// Persist environment in local file for client to load at runtime.
 			string fullPath = fileRoot + "/Environment.txt";
@@ -249,6 +250,7 @@ class PerformBuild
 		if (0 == svnrevision.Length)
 		{
 			svnrevision = "0";
+			svnRevisionText += " [client will default to \"" + "\"0]";
 		}
 
 		if (0 != svnrevision.Length)
